@@ -23,7 +23,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     {
       'title': 'Viaja con confianza',
       'description': 'Conductores verificados, seguimiento en tiempo real y soporte 24/7.',
-      ''icon': Icons.verified_user_outlined,
+      'icon': Icons.verified_user_outlined,
       'color': Colors.deepOrange,
     },
     {
@@ -59,44 +59,51 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: _onboardingData.length,
-              onPageChanged: _onPageChanged,
-              itemBuilder: (context, index) {
-                return _OnboardingContent(
-                  data: _onboardingData[index],
-                  onSkip: _skip,
-                );
-              },
+      body: SafeArea(
+        child: Column(
+          children: [
+            // 1. Cabecera Fija
+            _OnboardingHeader(onSkip: _skip),
+            
+            // 2. Contenido Central (PageView)
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: _onboardingData.length,
+                onPageChanged: _onPageChanged,
+                itemBuilder: (context, index) {
+                  return _OnboardingContent(
+                    data: _onboardingData[index],
+                  );
+                },
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    _onboardingData.length,
-                    (index) => _buildDot(index, context),
+            
+            // 3. Pie de Página Fijo
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      _onboardingData.length,
+                      (index) => _buildDot(index, context),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _nextPage,
-                    child: Text(_currentPage == _onboardingData.length - 1 ? 'Comenzar' : 'Siguiente'),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _nextPage,
+                      child: Text(_currentPage == _onboardingData.length - 1 ? 'Comenzar' : 'Siguiente'),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -115,39 +122,52 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 }
 
-class _OnboardingContent extends StatelessWidget {
-  final Map<String, dynamic> data;
+// Widget para la cabecera fija
+class _OnboardingHeader extends StatelessWidget {
   final VoidCallback onSkip;
 
-  const _OnboardingContent({required this.data, required this.onSkip});
+  const _OnboardingHeader({required this.onSkip});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          TextButton(
+            onPressed: () => context.go('/login'),
+            child: const Text('Iniciar sesión', style: TextStyle(color: AppTheme.primaryColor)),
+          ),
+          TextButton(
+            onPressed: onSkip,
+            child: const Text('Saltar', style: TextStyle(color: Colors.grey)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Widget para el contenido central que se desliza
+class _OnboardingContent extends StatelessWidget {
+  final Map<String, dynamic> data;
+
+  const _OnboardingContent({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 50),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                onPressed: () => context.go('/login'),
-                child: const Text('Iniciar sesión', style: TextStyle(color: AppTheme.primaryColor)),
-              ),
-              TextButton(
-                onPressed: onSkip,
-                child: const Text('Saltar', style: TextStyle(color: Colors.grey)),
-              ),
-            ],
-          ),
-          const Spacer(),
           Container(
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: data['color'].withOpacity(0.1),
+              color: (data['color'] as Color).withOpacity(0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -176,7 +196,6 @@ class _OnboardingContent extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          const Spacer(flex: 2),
         ],
       ),
     );
