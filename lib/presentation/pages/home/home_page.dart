@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Ocultar botón de back
-        title: const Text('Trans Go'),
+        title: const Text('Driver App'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
+                    color: Colors.black.withOpacity(0.1),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: const Offset(0, 3),
