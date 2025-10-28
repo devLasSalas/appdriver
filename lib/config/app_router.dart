@@ -38,7 +38,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/splash',
-      builder: (context, state) => const SplashScreen(),
+      builder: (context, state) => const SplashPage(),
     ),
     GoRoute(
       path: '/onboarding',
