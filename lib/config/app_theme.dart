@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color primaryColor = Color(0xFF1E88E5); // Un azul vibrante, similar a Uber
-  static const Color accentColor = Color(0xFFFFC107); // Amarillo para acentos
+  // static const Color primaryColor = Color(0xFF1E88E5);
+  static const Color primaryColor = Color.fromARGB(255, 106, 30, 229);
+  static const Color accentColor = Color(0xFFFFC107); 
   static const Color darkColor = Color(0xFF212121);
   static const Color lightColor = Color(0xFFFAFAFA);
 
