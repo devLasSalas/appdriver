@@ -37,7 +37,7 @@ class _SplashPageState extends State<SplashPage> {
             SizedBox(height: 20),
             // Nombre de la aplicación
             Text(
-              'App Driver',
+              'Trans Go',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 32,

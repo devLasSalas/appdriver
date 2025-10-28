@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'App Driver',
+      title: 'Trans Go', //Transporte + ir
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       routerConfig: appRouter,
